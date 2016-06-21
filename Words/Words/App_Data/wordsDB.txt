@@ -1,8 +1,8 @@
-﻿kitten;https://pixabay.com/static/uploads/photo/2014/03/29/09/17/cat-300572_960_720.jpg
-duck;http://static6.comicvine.com/uploads/original/0/77/4338755-donald-duck-30.jpg
-book;http://kingofwallpapers.com/book/book-004.jpg
-skyline;http://farm8.staticflickr.com/7009/6446244541_e165af10bc_o.jpg
-tree;http://vignette2.wikia.nocookie.net/witcher/images/b/b6/Hngmtr.png/revision/latest?cb=20150927074615
-scarecrow;https://upload.wikimedia.org/wikipedia/commons/7/76/Kakashi2.jpg
-pumpkin;http://theresekerr.com/wp-content/uploads/2013/01/105495782-copy.jpg
-lizard;http://res.cloudinary.com/dk-find-out/image/upload/q_80,w_1440/10140482_den8mp.jpg
+﻿kitten;https://pixabay.com/static/uploads/photo/2014/03/29/09/17/cat-300572_960_720.jpg;kitten
+duck;http://static6.comicvine.com/uploads/original/0/77/4338755-donald-duck-30.jpg;duck
+book;http://kingofwallpapers.com/book/book-004.jpg;book
+skyline;http://farm8.staticflickr.com/7009/6446244541_e165af10bc_o.jpg;skyline
+tree;http://vignette2.wikia.nocookie.net/witcher/images/b/b6/Hngmtr.png/revision/latest?cb=20150927074615;tree
+scarecrow;https://upload.wikimedia.org/wikipedia/commons/7/76/Kakashi2.jpg;scarecrow
+pumpkin;http://theresekerr.com/wp-content/uploads/2013/01/105495782-copy.jpg;pumpkin
+lizard;http://res.cloudinary.com/dk-find-out/image/upload/q_80,w_1440/10140482_den8mp.jpg;lizard

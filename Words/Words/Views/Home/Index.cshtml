@@ -37,6 +37,9 @@
 <audio id="winAudio">
     <source src="~/Content/Sounds/Winning-sound-effect.mp3" type="audio/mpeg" />
 </audio>
+<audio id="wrdAudio">
+    <source src="" type="audio/mpeg" />
+</audio>
 
 <script>
     var answer = "#Answer";
@@ -45,9 +48,11 @@
     var guide = "#Guide";
     var word = "";
     var pictureLink = "";
+    var sndLink = "";
     getNewWord();
     var audio = document.getElementById('audio');
     var winAudio = document.getElementById('winAudio');
+    var sndAudio = document.getElementById('wrdAudio');
     var beepLink = "";
     var ansCtr = 1;
     //Guide images
@@ -77,6 +82,8 @@
                     winAudio.play();
                     $("#guideImg").attr("src", corrG);
                     $("#NextBtn").show();
+                    winAudio.onended = function(){
+                    document.getElementById('wrdAudio').play();}
                 } else {
                     $("#guideImg").attr("src", incorrG); //incorrect answer
                 }
@@ -158,6 +165,10 @@
     function setNewPic(newPic) {
         pictureLink = newPic;
     }
+    function setNewSnd(newSnd) {
+        sndLink = newSnd;
+        $("#wrdAudio").attr("src", newSnd);
+    }
     //END LOADERS
 
     //get next word
@@ -171,6 +182,7 @@
             success: function (wordData) {
                 setNewWord(wordData.Word);
                 setNewPic(wordData.Link);
+                setNewSnd(wordData.Audio);
             }
         });
     }

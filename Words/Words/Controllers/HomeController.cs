@@ -31,10 +31,12 @@ namespace Words.Controllers
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             var newWord = substrings[0]; //set New Word 
             var newLink = substrings[1]; //set New Link
+            var newAudio = Url.Content("~/Content/Sounds/Words/" + substrings[2] + ".mp3"); //set New Audio
             var data = new Words.Models.DataModel()
             {
                 Word = newWord,
-                Link = newLink
+                Link = newLink,
+                Audio = newAudio
             };
             var jWord = Json(data, JsonRequestBehavior.AllowGet);
             return jWord;

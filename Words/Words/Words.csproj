@@ -181,6 +181,14 @@
     <Content Include="Content\Misc\met.jpeg" />
     <Content Include="Content\Sounds\beep.mp3" />
     <Content Include="Content\Sounds\Winning-sound-effect.mp3" />
+    <Content Include="Content\Sounds\Words\book.mp3" />
+    <Content Include="Content\Sounds\Words\duck.mp3" />
+    <Content Include="Content\Sounds\Words\kitten.mp3" />
+    <Content Include="Content\Sounds\Words\lizard.mp3" />
+    <Content Include="Content\Sounds\Words\pumpkin.mp3" />
+    <Content Include="Content\Sounds\Words\scarecrow.mp3" />
+    <Content Include="Content\Sounds\Words\skyline.mp3" />
+    <Content Include="Content\Sounds\Words\tree.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

@@ -9,5 +9,6 @@ namespace Words.Models
     {
         public string Word { get; set; }
         public string Link{get;set;}
+        public string Audio { get; set; }
     }
 }
