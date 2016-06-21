@@ -1,0 +1,191 @@
+﻿@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href='https://fonts.googleapis.com/css?family=Candal' rel='stylesheet' type='text/css'>
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<div id="mainDiv">
+    <div id="secondDiv">
+        <div id="answerContainer">
+            <div id="Answer">
+
+            </div>
+        </div>
+        <div id="Picture">
+
+        </div>
+        <div id="Guide">
+
+        </div>
+        <div id="clear">
+            @*reset float*@
+        </div>
+        <div id="Buttons">
+
+        </div>
+        <div id="guessContainer">
+            <div id="Guess">
+
+            </div>
+        </div>
+     </div>
+</div>
+<audio id="audio">
+    <source src="~/Content/Sounds/beep.mp3" type="audio/mpeg" />
+</audio>
+<audio id="winAudio">
+    <source src="~/Content/Sounds/Winning-sound-effect.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+    var answer = "#Answer";
+    var guess = "#Guess";
+    var picture = "#Picture"
+    var guide = "#Guide";
+    var word = "";
+    var pictureLink = "";
+    getNewWord();
+    var audio = document.getElementById('audio');
+    var winAudio = document.getElementById('winAudio');
+    var beepLink = "";
+    var ansCtr = 1;
+    //Guide images
+    var voidG = '@Url.Content("~/Content/Guide/void.png")';
+    var corrG = '@Url.Content("~/Content/Guide/correct.png")';
+    var incorrG = '@Url.Content("~/Content/Guide/incorrect.png")';
+    //Fill guess and answer
+    FillWords();
+    //Create buttons
+    createReset();
+    createNext();
+    //load image
+    $(picture).prepend('<img id="wordImg" src=' + pictureLink + ' />');
+    $(guide).prepend('<img id="guideImg" src=' + voidG + '>');
+
+        //open
+        function Open() {
+            var id = $(this).attr("id");
+            var text = $(this).text();
+            $(this).hide();
+            audio.play();
+            $(answer + " #card" + ansCtr).text(text);
+            if (ansCtr == word.length) {
+                var tmpAnswer = "";
+                $(answer + " div").each(function () { tmpAnswer += $(this).text(); });
+                if (tmpAnswer == word) { //ANSWER is correct
+                    winAudio.play();
+                    $("#guideImg").attr("src", corrG);
+                    $("#NextBtn").show();
+                } else {
+                    $("#guideImg").attr("src", incorrG); //incorrect answer
+                }
+            } else {
+                ansCtr++;
+            }
+        }
+    //Reset level
+    function ResetLevel() {
+        $(answer + " div").each(function () { $(this).text(""); }); //Clear answer letters
+        ansCtr = 1; //Reset pointer
+        //Shuffle guess word
+        var tmpFiller = 0;
+        ClearWords();
+        FillWords();
+        //reload img
+        $("#wordImg").attr("src", pictureLink);
+        $("#guideImg").attr("src", voidG);
+        $("#NextBtn").hide();
+    }
+    //Next Level
+    function NextLevel() {
+        ClearWords();
+        getNewWord();
+        ResetLevel();
+        $("#NextBtn").hide();
+    }
+
+    //BUTTONS
+    //Add reset button
+    function createReset() {
+        var $input = $('<input type="button" value="Reset   &#8634" id="ResetBtn"/>');
+        $input.appendTo("#Buttons");
+        $input.click(function () {
+            ResetLevel(); //reset function
+        });
+    }
+    //Add next button
+    function createNext() {
+        var $input = $('<input type="button" value="Next Level    &#8594" id="NextBtn"/>');
+        $input.appendTo("#Buttons");
+        $input.click(function () {
+            NextLevel(); //next function
+        });
+        $input.hide();
+    }
+    //END BUTTONS
+
+    //WORDS FUNCTIONS
+    //Filling words
+    function FillWords() {
+
+        for (var y = 1; y < word.length + 1; y++) {
+            $(answer).append("<div id=card" + y + "></div>");
+        }
+        //Fill guess
+        var tmpWord = shuffle(word);
+        for (var y = 1; y < tmpWord.length + 1; y++) {
+            $(guess).append("<div id=card" + y + ">" + tmpWord.charAt(y - 1) + "</div>");
+        }
+        $(guess + " div").click(Open);
+        //Center
+        $(answer).css("padding-left", ($(answer).parent().width() - (word.length * 55)) / 2);
+        $(guess).css("padding-left", ($(guess).parent().width() - (word.length * 55)) / 2);
+    }
+    //Remove words
+    function ClearWords() {
+        for (var y = 1; y < word.length + 1; y++) {
+            $(answer + " #card" + y).remove();
+            $(guess + " #card" + y).remove();
+        }
+    }
+    //END WORDS FUNCTIONS
+
+    //LOADERS (CALL EM)
+    function setNewWord(newWord) {
+        word = newWord;
+    }
+    function setNewPic(newPic) {
+        pictureLink = newPic;
+    }
+    //END LOADERS
+
+    //get next word
+    function getNewWord() {
+        $.ajax({
+            url: '@Url.Action("getWord", "Home")',
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            async: false,
+            success: function (wordData) {
+                setNewWord(wordData.Word);
+                setNewPic(wordData.Link);
+            }
+        });
+    }
+
+    //3rd pty functions
+    function shuffle(string) {
+        var parts = string.split('');
+        for (var i = parts.length; i > 0;) {
+            var random = parseInt(Math.random() * i);
+            var temp = parts[--i];
+            parts[i] = parts[random];
+            parts[random] = temp;
+        }
+        return parts.join('');
+    }
+    //TEST
+
+</script>
