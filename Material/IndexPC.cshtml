@@ -1,0 +1,180 @@
+﻿@using Mvc.RazorTools.FontAwesome;
+<html>
+<head>
+    <title>Material Home</title>
+    <link href="~/Content/angular-material.css" rel="stylesheet" />
+    <link href="~/Content/MaterialCSS.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Mvc.RazorTools.BundleManager.Styles.Render()
+</head>
+<body ng-app="SteamAppChoser" ng-cloak layout="column">
+    @*Toolbar*@
+    <div ng-app="SteamAppChoser" class="toolbar" ng-cloak="">
+        <md-content>
+            <md-toolbar class="md-hue-21">
+                <div class="md-toolbar-tools">
+                    <div ng-controller="SideCtrl">
+                        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="false" ng-click="toggleLeft()">
+                            <md-icon md-svg-icon="~/Content/icons/menu.svg"></md-icon>
+                        </md-button>
+                    </div>
+                    <h2>
+                        <span>Steam Chooser</span>
+                    </h2>
+                    <span flex=""></span>
+                    <md-button class="md-icon-button" aria-label="Favorite">
+                        <md-icon md-svg-icon="~/Content/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="~/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+        </md-content>
+    </div>
+    @*MENU*@
+    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="blue md-hue-1">
+        <md-nav-item name="page1" md-nav-href="/Home/Index">Tiles Apps</md-nav-item>
+        <md-nav-item name="page2" md-nav-href="/Home/IndexPC">Card Apps</md-nav-item>
+    </md-nav-bar>
+    @*SIDENAV*@
+    <div ng-controller="SideCtrl">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Settings</h1>
+            </md-toolbar>
+            <img src="~/Content/img/PaperColorMaterialDesign_Blue.png" style="overflow:hidden;height:200px;">
+            <md-content layout-margin>
+                <p>
+                    Here is your settings menu, check it out!
+                </p>
+                <md-list @*ng-controller="ListCtrl"*@ ng-cloak>
+                    <md-subheader class="md-no-sticky">Roll options</md-subheader>
+                        <md-list-item>
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">card_giftcard</i>
+                            <p>  Hide DLC</p>
+                            <md-switch class="md-secondary"></md-switch>
+                        </md-list-item>
+                        <md-list-item>
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">check_circle</i>
+                            <p>  Show only AAA games</p>
+                            <md-switch class="md-secondary"></md-switch>
+                        </md-list-item>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">favorite</i>
+                            <p>  Show favorites</p>
+                        </md-list-item>
+                    <md-divider></md-divider>
+                        <md-subheader class="md-no-sticky">Settings</md-subheader>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">account_box</i>
+                            <p>  Account</p>
+                        </md-list-item>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">credit_card</i>
+                            <p>  Donation</p>
+                        </md-list-item>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <i class="material-icons" style="color: rgb(117, 117, 117);">settings</i>
+                            <p>  Settings</p>
+                        </md-list-item>
+                    <md-divider></md-divider>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <p>Questions</p>
+                        </md-list-item>
+                        <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                            <p>About</p>
+                        </md-list-item>
+                    <md-divider></md-divider>
+                </md-list>
+                <md-button ng-click="toggleLeft()" class="md-raised md-primary" style="width:94%">
+                    <md-icon md-svg-icon="~/Content/icons/keyboard_arrow_left_white.svg"></md-icon>
+                    Close
+                </md-button>
+            </md-content>
+            </md-sidenavng-controller>
+    </div>
+    @*Body*@
+    <div ng-app="SteamAppChoser" class="gridListdemoDynamicTiles" ng-controller="gridListDemoCtrl as vm" flex="" ng-cloak="">
+        <div flex-xs="" flex-gt-xs="100" layout="column" layout-align="center center">
+            <div layout=" column" style="width:65%">
+                <md-card md-whiteframe="8" ng-repeat="tile in vm.tiles" md-rowspan="{{tile.span.row}}" md-colspan="{{tile.span.col}}" md-colspan-sm="1" md-colspan-xs="1" ng-class="tile.background" style="min-height:250px" >
+                    <md-card-content layout="row" layout-align="space-between" style="padding-top: 0px; padding-left: 0px;">
+                        <div class="md-media-xl card-media">
+                            <img ng-src="{{tile.icon}}" class="md-card-image" style="height:250px;width:250px;">
+                        </div>
+                        <div style="width:400px;">
+                            <h3 style="text-align:center; color:white;">{{tile.title}}</h3>
+                            <div style="width: 100%; height: 100%;">
+                                <table id="Game_Info" style="text-align: center; color: white; margin: 0 auto;">
+                                    <tr>
+                                        <td>{{tile.genre}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{tile.release_date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{tile.publisher}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <md-card-actions layout="column">
+                            <div ng-app="SteamAppChoser" ng-controller="CardMenuCtrl as ctrl">
+                                <md-menu md-position-mode="target-right target">
+                                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+                                        <md-icon md-svg-icon="~/Content/icons/more_vert.svg"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4">
+                                        <md-menu-item>
+                                            <md-button ng-click="ctrl.announceClick($index)">
+                                                <div layout="row" flex="">
+                                                    <md-icon md-svg-icon="~/Content/icons/rate_review_black_36px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                                                    <p flex="" md-menu-align-target="">{{tile.mc}}</p>
+                                                </div>
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="ctrl.announceClick($index)">
+                                                <div layout="row" flex="">
+                                                    <md-icon md-svg-icon="~/Content/icons/rate_review_black_36px.svg" style="margin: auto 3px auto 0;"></md-icon>
+                                                    <p flex="" md-menu-align-target="">Something here</p>
+                                                </div>
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </div>
+                            <md-button class="md-icon-button" aria-label="Favorite" ng-click="showActionToast($event)">
+                                <md-icon md-svg-icon="~/Content/icons/favorite.svg"></md-icon>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Navigation" ng-click="showAlert($event,tile.link, tile.desc)">
+                                <md-icon md-svg-icon="~/Content/icons/open_in_new.svg"></md-icon>
+                            </md-button>
+                        </md-card-actions>
+                    </md-card-content>
+
+                </md-card>
+            </div>
+        </div>
+    </div>
+    @*MENU BOTTOM BUTTON*@
+    <div layout="row">
+        <md-button class="md-primary md-fab md-fab-bottom-right" aria-label="Close" onclick="javascript:window.location.reload()">
+            <md-icon md-svg-icon="~/Content/icons/refresh.svg"></md-icon>
+        </md-button>
+    </div>
+    @*Scripts*@
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular-animate/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
+    <script src="~/Scripts/angular-material/angular-material.min.js"></script>
+
+    <script src="~/Scripts/MaterialScript.js"></script>
+    </bodyng-app>
+</html>

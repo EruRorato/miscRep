@@ -1,97 +1,148 @@
-﻿
-@{
-    ViewBag.Title = "Home Page";
-}
+﻿@using Mvc.RazorTools.FontAwesome;
+<html>
 <head>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
-    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>Material Home</title>
+    <link href="~/Content/angular-material.css" rel="stylesheet" />
+    <link href="~/Content/MaterialCSS.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Mvc.RazorTools.BundleManager.Styles.Render()
 </head>
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
+<body ng-app="SteamAppChoser" ng-cloak layout="column">
+    @*Toolbar*@
+    <div ng-app="SteamAppChoser" class="toolbar" ng-cloak="">
+        <md-content>
+            <md-toolbar class="md-hue-21">
+                <div class="md-toolbar-tools">
+                    <div ng-controller="SideCtrl">
+                        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="false" ng-click="toggleLeft()">
+                            <md-icon md-svg-icon="~/Content/icons/menu.svg"></md-icon>
+                        </md-button>
+                        </div>
+                    <h2>
+                        <span>Steam Chooser</span>
+                    </h2>
+                    <span flex=""></span>
+                    <md-button class="md-icon-button" aria-label="Favorite">
+                        <md-icon md-svg-icon="~/Content/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More">
+                        <md-icon md-svg-icon="~/Content/icons/more_vert.svg"></md-icon>
+                    </md-button>
+                    </div>
+            </md-toolbar>
+        </md-content>
+    </div>
+    @*MENU*@
+    <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" class="md-hue-21">
+        <md-nav-item name="page1" md-nav-href="/Home/Index">Tiles Apps</md-nav-item>
+        <md-nav-item name="page2" md-nav-href="/Home/IndexPC">Card Apps</md-nav-item>
+    </md-nav-bar>
+    @*SIDENAV*@
+    <div ng-controller="SideCtrl">
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Settings</h1>
+            </md-toolbar>
+            <img src="~/Content/img/PaperColorMaterialDesign_Blue.png" style="overflow:hidden;height:200px;">
+            <md-content layout-margin>
+                <p>
+                    Here is your settings menu, check it out!
+                </p>
+                <md-list @*ng-controller="ListCtrl"*@ ng-cloak>
+                    <md-subheader class="md-no-sticky">Roll options</md-subheader>
+                    <md-list-item>
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">card_giftcard</i>
+                        <p>  Hide DLC</p>
+                        <md-switch class="md-secondary"></md-switch>
+                    </md-list-item>
+                    <md-list-item>
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">check_circle</i>
+                        <p>  Show only AAA games</p>
+                        <md-switch class="md-secondary"></md-switch>
+                    </md-list-item>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">favorite</i>
+                        <p>  Show favorites</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-subheader class="md-no-sticky">Settings</md-subheader>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">account_box</i>
+                        <p>  Account</p>
+                    </md-list-item>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">credit_card</i>
+                        <p>  Donation</p>
+                    </md-list-item>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <i class="material-icons" style="color: rgb(117, 117, 117);">settings</i>
+                        <p>  Settings</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <p>Questions</p>
+                    </md-list-item>
+                    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)">
+                        <p>About</p>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                </md-list>
+                <md-button ng-click="toggleLeft()" class="md-raised md-primary" style="width:94%">
+                    <md-icon md-svg-icon="~/Content/icons/keyboard_arrow_left_white.svg"></md-icon>
+                    Close
+                </md-button>
+            </md-content>
+            </md-sidenavng-controller>
+    </div>
+    @*Body*@
+    @*TILES*@
+    <div ng-app="SteamAppChoser" class="gridListdemoDynamicTiles" ng-controller="gridListDemoCtrl as vm" flex="" ng-cloak="">
+            <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
+            <md-grid-tile class="md-hue-1"  md-whiteframe="8" ng-repeat="tile in vm.tiles" md-rowspan="{{tile.span.row}}" md-colspan="{{tile.span.col}}" md-colspan-sm="1" md-colspan-xs="1" ng-class="tile.background">
+                <table style="width:100%;height:100%; text-align:center">
+                    <tr>
+                        <td><img ng-src="{{tile.icon}}" width="100%" height="45%"></td>
+                    </tr>
+                    <tr>
+                        <td>{{tile.genre}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{tile.release_date}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{tile.publisher}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+                <md-grid-tile-footer>
+                    <div layout="row" layout-align="end center" layout-fill>
+                        <div class="mdx-tile-hf-text mdx-tile-hf-action-left">
+                            <h3>{{tile.title}}</h3>
+                        </div>
+                        <md-button class="md-icon-button mdx-tile-hf-action-icon" aria-label="Navigation" ng-click="showAlert($event,tile.link, tile.desc)">
+                            <md-icon md-svg-icon="~/Content/icons/open_in_new.svg"></md-icon>
+                        </md-button>
+                    </div>
+                </md-grid-tile-footer>
+            </md-grid-tile>
+        </md-grid-list>
+        </div>
+        @*MENU BOTTOM BUTTON*@
+        <div layout="row">
+            <md-button class="md-primary md-fab md-fab-bottom-right" aria-label="Close" onclick="javascript:window.location.reload()">
+                <md-icon md-svg-icon="~/Content/icons/refresh.svg"></md-icon>
+            </md-button>
+        </div>
+        @*Scripts*@
+        <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+        <script src="~/Scripts/angular/angular.min.js"></script>
+        <script src="~/Scripts/angular-animate/angular-animate.min.js"></script>
+        <script src="~/Scripts/angular-aria/angular-aria.min.js"></script>
+        <script src="~/Scripts/angular-material/angular-material.min.js"></script>
 
-
-
-<div class="row">
-    @*<div id="outerGame">*@
-        <div id="gameDiv"></div>
-    @*</div>*@
-</div>
-
-<script>
-    $.ajax({
-        url: '@Url.Action("getGamedata", "Home")',
-        type: 'GET',
-        dataType: 'json',
-        cache: false,
-        async: false,
-        success: function (gameInfo) {
-            //alert(gameInfo.Name); //Working OK
-            for(var i=0;i<6;i++)
-                createTable(gameInfo[i]);
-        }
-    });
-
-    function loadImage(path, width, height, target) {
-        $('<img src="'+ path +'">').load(function() {
-            $(this).width(width).height(height).appendTo(target);
-        });
-    }
-
-    function createTable(itm) {
-        var body = document.getElementsByTagName('body')[0];
-        var tbl = document.createElement('table');
-        //Table css
-        tbl.style.width = '25%';
-        tbl.setAttribute('border', '1');
-        tbl.setAttribute('class', 'table');
-        tbl.style.maxHeight = '800px';
-        tbl.style.overflow = 'hidden';
-        tbl.className = 'table table-striped table-inverse';
-        //get keys
-        var tbdy = document.createElement('tbody');
-        var keys = Object.keys(itm);
-        //Enter image
-        img = document.createElement('img');
-        img.src = itm.ImageUrl;
-        img.style.width = '60%';
-        img.style.height = '60%';
-        var link = "http://store.steampowered.com/app/" + itm["ImageUrl"].substring(itm["ImageUrl"].lastIndexOf("/steam/apps/") + 12, itm["ImageUrl"].lastIndexOf("/header"));
-        img.onclick = function ()
-        {
-            window.open(link);
-        }
-        img.style.cursor = "pointer";
-        
-
-        //prepare table
-        var tr = document.createElement('tr');
-        var td = document.createElement('td');
-        td.appendChild(img);
-        tr.appendChild(td);
-        tbdy.appendChild(tr);
-        //end image
-
-        //Game name
-        createTrTD(tbdy, itm["Name"]);
-        createTrTD(tbdy, (itm["Genre"].length > 2 ? "Genre: " + itm["Genre"] : "Genre: undefined"));
-        createTrTD(tbdy, (itm["ReleaseDate"].length > 2 ? "ReleaseDate: " + itm["ReleaseDate"] : " ReleaseDate: undefined"));
-        createTrTD(tbdy, (itm["Publisher"].length > 2 ? "Publisher: " + itm[" Publisher"] : " Publisher: undefined"));
-        createTrTD(tbdy, (itm["MetaCritics"].length > 2 ? "MetaCritics: " + itm["MetaCritics"] : " MetaCritics: undefined"));
-
-        //Append table
-        tbl.appendChild(tbdy);
-        document.getElementById("gameDiv").appendChild(tbl);
-
-    }
-
-    function createTrTD(tbdy,text)
-    {
-        var tr = document.createElement('tr');
-        var td = document.createElement('td');
-        td.appendChild(document.createTextNode(text));
-        td.style.height = '37px';
-        tr.appendChild(td);
-        tbdy.appendChild(tr);
-    }
-</script>
+        <script src="~/Scripts/MaterialScript.js"></script>
+        </bodyng-app>
+</html>
