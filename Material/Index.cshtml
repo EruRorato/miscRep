@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+
+
+<div class="row">
+    @*<div id="outerGame">*@
+        <div id="gameDiv"></div>
+    @*</div>*@
+</div>
+
+<script>
+    $.ajax({
+        url: '@Url.Action("getGamedata", "Home")',
+        type: 'GET',
+        dataType: 'json',
+        cache: false,
+        async: false,
+        success: function (gameInfo) {
+            //alert(gameInfo.Name); //Working OK
+            for(var i=0;i<6;i++)
+                createTable(gameInfo[i]);
+        }
+    });
+
+    function loadImage(path, width, height, target) {
+        $('<img src="'+ path +'">').load(function() {
+            $(this).width(width).height(height).appendTo(target);
+        });
+    }
+
+    function createTable(itm) {
+        var body = document.getElementsByTagName('body')[0];
+        var tbl = document.createElement('table');
+        //Table css
+        tbl.style.width = '25%';
+        tbl.setAttribute('border', '1');
+        tbl.setAttribute('class', 'table');
+        tbl.style.maxHeight = '800px';
+        tbl.style.overflow = 'hidden';
+        tbl.className = 'table table-striped table-inverse';
+        //get keys
+        var tbdy = document.createElement('tbody');
+        var keys = Object.keys(itm);
+        //Enter image
+        img = document.createElement('img');
+        img.src = itm.ImageUrl;
+        img.style.width = '60%';
+        img.style.height = '60%';
+        var link = "http://store.steampowered.com/app/" + itm["ImageUrl"].substring(itm["ImageUrl"].lastIndexOf("/steam/apps/") + 12, itm["ImageUrl"].lastIndexOf("/header"));
+        img.onclick = function ()
+        {
+            window.open(link);
+        }
+        img.style.cursor = "pointer";
+        
+
+        //prepare table
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.appendChild(img);
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+        //end image
+
+        //Game name
+        createTrTD(tbdy, itm["Name"]);
+        createTrTD(tbdy, (itm["Genre"].length > 2 ? "Genre: " + itm["Genre"] : "Genre: undefined"));
+        createTrTD(tbdy, (itm["ReleaseDate"].length > 2 ? "ReleaseDate: " + itm["ReleaseDate"] : " ReleaseDate: undefined"));
+        createTrTD(tbdy, (itm["Publisher"].length > 2 ? "Publisher: " + itm[" Publisher"] : " Publisher: undefined"));
+        createTrTD(tbdy, (itm["MetaCritics"].length > 2 ? "MetaCritics: " + itm["MetaCritics"] : " MetaCritics: undefined"));
+
+        //Append table
+        tbl.appendChild(tbdy);
+        document.getElementById("gameDiv").appendChild(tbl);
+
+    }
+
+    function createTrTD(tbdy,text)
+    {
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.appendChild(document.createTextNode(text));
+        td.style.height = '37px';
+        tr.appendChild(td);
+        tbdy.appendChild(tr);
+    }
+</script>
